@@ -1,0 +1,41 @@
+<div class="container">
+    <h3>New User Reactive form</h3>
+    <form [formGroup]="shoppingListForm" >
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input formControlName="name" class="form-control" type="text">
+        <div class="alert alert-danger" *ngIf="name.touched && name.invalid">
+          <p *ngIf="name.errors.required">Name is Required!</p>
+          <p *ngIf="name.errors.minlength">Name must be atleast {{ name.errors.minlength.requiredLength }} Characters Long!</p>
+          <p *ngIf="name.errors.pattern">Name can only be of pattern {{ name.errors.pattern.requiredPattern }}!</p>
+        </div>
+      </div>
+     
+      <div class="form-group">
+        <label for="number">value</label>
+        <input formControlName="number" class="form-control" type="text">
+      </div>
+      
+  
+      
+      <fieldset>
+      <legend>
+          <button class="btn btn-primary" (click)= "addIngr()">Add</button>
+          <button class="btn btn-error" (click)= "deleteIngr()">Delete</button>
+          <button class="btn btn-danger" (click)= "clearIngr()">Clear</button>
+
+        </legend>
+      </fieldset>
+      
+      <fieldset>
+        
+        <div class="input-group" *ngFor="let ingrControl of shoppingListForm.get('ingredients').controls; let i = index;" [formGroupName]= "i">
+          
+          <input type="text" class="form-control"  formControlName="ingredient" [value]="ingrControl.value">
+    <span *ngIf = "deleteIngrVal" class="input-group-addon glyphicon glyphicon-trash" (click)="deleteIngredient(i)"></span>
+        </div>
+      </fieldset>
+      
+      
+    </form>
+  </div>
